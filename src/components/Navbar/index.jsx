@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, Router, Link } from 'react-router-dom'
+import {Link } from 'react-router-dom'
 
 export default function Navbar() {
   return (

@@ -25,13 +25,11 @@ const collectionSlice = createSlice({
 
     [getCollections.rejected]: (state,action) => {
       state.loading = false
-      console.log(action.error.message)
       state.error = action.payload.error
     },
 
     [getCollections.fulfilled]: (state,action) => {
       state.loading = false
-      console.log(action.payload)
       state.collections = action.payload.collections
     }
   }
