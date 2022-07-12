@@ -3,6 +3,23 @@ import SnipeService from "../services/snipeService";
 
 const service = new SnipeService()
 
+const initialState = () => ({
+  collection:"",
+  attributes:[],
+  selectedAttributes:{},
+  query:"",
+  loading: "idle",
+  priceFilter:"",
+  refreshInterval:1,
+  error: false,
+  nfts:{
+    items:[],
+    loading: "idle",
+    error: false
+  }
+
+})
+
 export const getCollectionAttr = createAsyncThunk("snipe/getCollectionAttr",async (symbol) => {
   return await service.getAttrByCollection(symbol)
   
@@ -16,34 +33,35 @@ export const getNftsByQuery = createAsyncThunk("snipe/getNftsByQuery",async (_,t
 
 const snipeSlice = createSlice({
   name:"snipe",
-  initialState:{
-    collection:"",
-    attributes:[],
-    selectedAttributes:{},
-    query:"",
-    loading: "idle",
-    error: false,
-    nfts:{
-      items:[],
-      loading: "idle",
-      error: false
-    }
-
-  },
+  initialState:initialState(),
   reducers:{
+
     setSnipeCollection : (state,action) => {
-      state.collection = action.payload
+      const query = JSON.stringify(service.getBlankQueryObj(action.payload,0))
+      return {...initialState(),collection:action.payload,query}
     },
+
     setSelectedAttrs: (state,action) => {
       const {trait_type,attributes} = action.payload
       state.selectedAttributes[trait_type] = attributes
       const query = service.createQuery(state.selectedAttributes,state.collection)
       state.query = query
+    },
+
+
+    setPriceFilter:(state,action) => {
+      state.priceFilter = action.payload
+    },
+
+
+    setRefreshInterval:(state,action) => {
+      state.refreshInterval = action.payload
     }
 
 
   },
   extraReducers:{
+
     [getCollectionAttr.pending]: (state,action) => {
       state.loading = true
     },
@@ -66,20 +84,19 @@ const snipeSlice = createSlice({
 
     [getNftsByQuery.rejected]: (state,action) => {
       state.nfts.loading = false
-      console.log(action)
       state.nfts.error = action.payload
+      state.nfts.items = []
     },
 
     [getNftsByQuery.fulfilled]: (state,action) => {
       state.nfts.loading = false
-      const nfts = action.payload.results
-      state.nfts.items = nfts
+      state.nfts.items = action.payload.results
     }
   }
 })
 
 //actions
-export const {setSnipeCollection, setSelectedAttrs} = snipeSlice.actions
+export const {setSnipeCollection, setSelectedAttrs, setPriceFilter, setRefreshInterval} = snipeSlice.actions
 
 //selectors
 export const snipeCollectionSelector = state => state.snipe.collection
@@ -87,6 +104,8 @@ export const attributesSelector = state => state.snipe.attributes
 export const selectedAttrsSelector = state => state.snipe.selectedAttributes
 export const querySelector = state => state.snipe.query
 export const nftsSelector = state => state.snipe.nfts
+export const priceFilterSelector = state => state.snipe.priceFilter
+export const refreshIntervalSelector = state => state.snipe.refreshInterval
 
 
 

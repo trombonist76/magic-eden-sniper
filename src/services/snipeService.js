@@ -10,7 +10,6 @@ export default class SnipeService {
 
   async getNftsFromQuery(query){
     const url = `${process.env.REACT_APP_OLD_ENDPOINT}rpc/getListedNFTsByQueryLite?q=${query}`
-    console.log(url)
     const {data} = await axios(url)
     return data
   }
@@ -18,25 +17,27 @@ export default class SnipeService {
   arrangeAttr(availableAttr){
     const result = availableAttr.reduce((acc,cur)=>{
       const trait_type = cur.attribute["trait_type"]
-
       if (!acc.hasOwnProperty(trait_type)){
         acc[trait_type] = []
       }
       acc[trait_type].push(cur)
-
       return acc
-
     },{})
 
     return result
   }
 
   createQuery(selectedAttributes, symbol, page=0) {
+    const filtered = Object.values(selectedAttributes).filter(attr=>attr.length > 0)
     const and = "$and"
     const match = "$match"
     const queryObj = this.getBlankQueryObj(symbol,page)
+    if(filtered.length === 0){
+      return JSON.stringify(queryObj)
+    }
+
     queryObj[match][and] = []
-    for (const [key, values] of Object.entries(selectedAttributes)) {
+    for (const [key, values] of Object.entries(filtered)) {
       const traitAttrs = values.map((val) => this.getTraitObj(val.attribute))
       const orObj = {"$or":traitAttrs}
       queryObj[match][and].push(orObj)
