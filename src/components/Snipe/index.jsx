@@ -3,12 +3,13 @@ import Attributes from "./Attributes"
 import NftList from "../NftList"
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
-import { fetchCollections, handleSnipeCollection, newCollections } from "../../utils/snipe"
+import { fetchCollections, handleSnipeCollection} from "../../utils/snipe"
+import {useSelector} from 'react-redux'
 
 const animatedComponents = makeAnimated()
 
 export default function Snipe() {
-  const collections = newCollections()
+  const collections = useSelector(state=>state.collections.collections)
   const handleChange = (collection) => {
     handleSnipeCollection(collection.symbol)
   }

@@ -1,26 +1,28 @@
 import React, { useEffect } from 'react'
 import Nft from './Nft'
-import { fetchNftsByQuery, priceFilter, refreshInterval, snipeNfts, snipeQuery } from '../../utils/snipe'
+import { fetchNftsByQuery} from '../../utils/snipe'
+import { useSelector } from 'react-redux'
 
 export default function NftList() {
-  const query = snipeQuery()
-  const price = priceFilter()
-  const refresh = refreshInterval() * 1000
-  const {items,loading,error} = snipeNfts()
-  const filteredItems = items.filter(item=> price ? price >= item.price : item)
+  const {query} = useSelector(state=>state.snipe)
+  const {priceFilter} = useSelector(state=>state.snipe)
+  const refreshInterval = useSelector(state=>state.snipe.refreshInterval) * 1000
+  const {items,loading,error} = useSelector(state=>state.snipe.nfts)
+  const filteredItems = items.filter(item=> priceFilter ? priceFilter >= item.price : item)
 
+  console.log(refreshInterval)
   useEffect(()=>{
     let interval
     if(query){
       interval = setInterval(()=>(
         fetchNftsByQuery()
-      ),refresh)
+      ),refreshInterval)
     }
 
     return () => {
       clearInterval(interval)
     }
-  },[query, refresh])
+  },[query, refreshInterval])
   
   return (
     <div className='nftList'>{filteredItems.map((item,index)=>(

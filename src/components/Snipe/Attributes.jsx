@@ -1,23 +1,24 @@
 import React, { useEffect } from "react";
 import Attribute from "./Attribute";
 import Input from "./Input";
-import { fetchCollectionAttr, priceFilter, refreshInterval, setPrice, setRefresh, snipeAttributes, snipeCollection } from "../../utils/snipe";
+import { fetchCollectionAttr, setPrice, setRefresh} from "../../utils/snipe";
+import { useSelector } from 'react-redux'
 
 
 export default function Attributes() {
-  const snipeSymbol = snipeCollection()
-  const attributes = snipeAttributes()
-  const price = priceFilter()
-  const refresh = refreshInterval()
+  const {collection} = useSelector(state=>state.snipe)
+  const {attributes} = useSelector(state=>state.snipe)
+  const priceFilter = useSelector(state=>state.snipe)
+  const refreshInterval = useSelector(state=>state.snipe)
   const isThereAnyAttributes = Object.values(attributes).some((values) => values?.length > 0)
   const handlePrice = e => setPrice(e.target.value)
   const handleRefresh = e => setRefresh(e.target.value)
   
   useEffect(() => {
-    if (snipeSymbol) {
-      fetchCollectionAttr(snipeSymbol)
+    if (collection) {
+      fetchCollectionAttr(collection)
     }
-  }, [snipeSymbol]);
+  }, [collection]);
 
   return (
     <div className="attributes">
@@ -27,7 +28,7 @@ export default function Attributes() {
 
       {isThereAnyAttributes && (
         <Input
-          value={price}
+          value={priceFilter}
           className="input priceFilter"
           placeholder="Max Price (Sol)"
           handleChange={handlePrice}
@@ -38,7 +39,7 @@ export default function Attributes() {
 
       {isThereAnyAttributes && (
         <Input
-          value={refresh}
+          value={refreshInterval}
           className="input refreshInterval"
           placeholder="Refresh Interval (second)"
           handleChange={handleRefresh}
