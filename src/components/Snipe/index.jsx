@@ -1,27 +1,21 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import {
-  collectionsSelector,
-  getCollections,
-} from "../../redux/collectionSlice";
-import { useDispatch } from "react-redux/";
-import { setSnipeCollection } from "../../redux/snipeSlice";
-import Attributes from "./Attributes";
-import NftList from "../NftList";
+import React, { useEffect } from "react"
+import Attributes from "./Attributes"
+import NftList from "../NftList"
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
+import { fetchCollections, handleSnipeCollection, newCollections } from "../../utils/snipe"
 
-const animatedComponents = makeAnimated();
+const animatedComponents = makeAnimated()
 
 export default function Snipe() {
-  const collections = useSelector((state) => collectionsSelector(state));
-  const dispatch = useDispatch();
-  const handleChange = (e) => {
-    dispatch(setSnipeCollection(e.symbol));
-  };
+  const collections = newCollections()
+  const handleChange = (collection) => {
+    handleSnipeCollection(collection.symbol)
+  }
+  
   useEffect(() => {
-    dispatch(getCollections());
-  }, [dispatch]);
+    fetchCollections()
+  }, [])
 
   return (
     <div className="snipe">

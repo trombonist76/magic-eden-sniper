@@ -1,37 +1,23 @@
 import React, { useEffect } from "react";
-import {
-  attributesSelector,
-  getCollectionAttr,
-  priceFilterSelector,
-  setPriceFilter,
-  snipeCollectionSelector,
-  refreshIntervalSelector,
-  setRefreshInterval,
-} from "../../redux/snipeSlice";
-import { useSelector, useDispatch } from "react-redux";
 import Attribute from "./Attribute";
 import Input from "./Input";
+import { fetchCollectionAttr, priceFilter, refreshInterval, setPrice, setRefresh, snipeAttributes, snipeCollection } from "../../utils/snipe";
 
 
 export default function Attributes() {
-  const snipeCollection = useSelector((state) => snipeCollectionSelector(state))
-  const attributes = useSelector((state) => attributesSelector(state))
-  const price = useSelector((state) => priceFilterSelector(state))
-  const refresh = useSelector((state) => refreshIntervalSelector(state))
-  const dispatch = useDispatch()
-
+  const snipeSymbol = snipeCollection()
+  const attributes = snipeAttributes()
+  const price = priceFilter()
+  const refresh = refreshInterval()
   const isThereAnyAttributes = Object.values(attributes).some((values) => values?.length > 0)
-  const handlePrice = e => dispatch(setPriceFilter(e.target.value))
-  const handleRefresh = e => {
-    console.log("sdafasdf")
-    dispatch(setRefreshInterval(e.target.value))
-  }
+  const handlePrice = e => setPrice(e.target.value)
+  const handleRefresh = e => setRefresh(e.target.value)
   
   useEffect(() => {
-    if (snipeCollection) {
-      dispatch(getCollectionAttr(snipeCollection));
+    if (snipeSymbol) {
+      fetchCollectionAttr(snipeSymbol)
     }
-  }, [snipeCollection, dispatch]);
+  }, [snipeSymbol]);
 
   return (
     <div className="attributes">

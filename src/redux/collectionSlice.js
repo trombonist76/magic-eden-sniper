@@ -36,7 +36,4 @@ const collectionSlice = createSlice({
 })
 
 
-export const loadingSelector = (state) => state.collections.loading
-export const errorSelector = (state) => state.collections.error
-export const collectionsSelector = (state) => state.collections.collections
 export default collectionSlice.reducer

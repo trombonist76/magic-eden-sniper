@@ -1,10 +1,7 @@
 import chroma from 'chroma-js';
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import Select,{components} from 'react-select'
-import makeAnimated from 'react-select/animated'
-import { selectedAttrsSelector, setSelectedAttrs } from '../../redux/snipeSlice';
-
+import Select from 'react-select'
+import { addSelectedAttr } from '../../utils/snipe';
 
 const colors = [
   "rgb(0, 184, 217)",
@@ -22,10 +19,8 @@ const colors = [
 
 export default function Attribute({options,trait}) {
   const coloredOpts = options.map((option,index)=>({...option, color: colors[index % colors.length]}))
-  const dispatch = useDispatch()
-  const selecteds = useSelector(state=> selectedAttrsSelector(state))
   const handleChange = (values) => {
-    dispatch(setSelectedAttrs({trait_type:trait,attributes:values}))
+    addSelectedAttr({trait,values})
   }
   return (
     <Select className='attribute'
@@ -42,11 +37,7 @@ export default function Attribute({options,trait}) {
 }
 
 
-
-
-const animatedComponents = makeAnimated();
 const customStyles = {
-  
 
     dropdownIndicator: (styles, state) => ({
       ...styles,

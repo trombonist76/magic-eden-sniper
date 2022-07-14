@@ -97,16 +97,4 @@ const snipeSlice = createSlice({
 
 //actions
 export const {setSnipeCollection, setSelectedAttrs, setPriceFilter, setRefreshInterval} = snipeSlice.actions
-
-//selectors
-export const snipeCollectionSelector = state => state.snipe.collection
-export const attributesSelector = state => state.snipe.attributes
-export const selectedAttrsSelector = state => state.snipe.selectedAttributes
-export const querySelector = state => state.snipe.query
-export const nftsSelector = state => state.snipe.nfts
-export const priceFilterSelector = state => state.snipe.priceFilter
-export const refreshIntervalSelector = state => state.snipe.refreshInterval
-
-
-
 export default snipeSlice.reducer
