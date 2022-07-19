@@ -1,9 +1,8 @@
-import React, { useEffect } from "react"
 import Attributes from "./Attributes"
 import NftList from "../NftList"
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
-import { fetchCollections, handleSnipeCollection} from "../../utils/snipe"
+import {handleSnipeCollection} from "../../utils/snipe"
 import {useSelector} from 'react-redux'
 
 const animatedComponents = makeAnimated()
@@ -14,10 +13,6 @@ export default function Snipe() {
     handleSnipeCollection(collection.symbol)
   }
   
-  useEffect(() => {
-    fetchCollections()
-  }, [])
-
   return (
     <div className="snipe">
       <aside>

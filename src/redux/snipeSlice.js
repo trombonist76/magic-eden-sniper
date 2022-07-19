@@ -27,7 +27,7 @@ export const getCollectionAttr = createAsyncThunk("snipe/getCollectionAttr",asyn
 
 export const getNftsByQuery = createAsyncThunk("snipe/getNftsByQuery",async (_,thunkAPI) => {
   const state = thunkAPI.getState()
-  const {query} = state.snipe
+  const {query} = state.snipe 
   return await service.getNftsFromQuery(query)
 })
 

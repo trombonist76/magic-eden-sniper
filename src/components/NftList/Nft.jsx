@@ -9,8 +9,6 @@ export default function Nft({ item }) {
         <h4>{title}</h4>
         <div className="price">
           <svg
-            width="18"
-            height="18"
             viewBox="0 0 101 88"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

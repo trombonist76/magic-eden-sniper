@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;700&display=swap");
 @import "mixin";
 @import "variables";
+@import "breakpoints";
 
 * {
   margin: 0;
@@ -17,6 +18,25 @@ body,
 .App {
   background-color: $bg-light;
   height: 100%;
+  @include xxl {
+    font-size: 0.9rem;
+  }
+
+  @include lg {
+    font-size: 0.8rem;
+  }
+
+  @include md {
+    font-size: 0.7rem;
+  }
+
+  @include sm {
+    font-size: 0.6rem;
+  }
+
+  @include xs {
+    font-size: 0.5rem;
+  }
 }
 
 .App {
@@ -24,6 +44,7 @@ body,
   flex-direction: column;
 
   .menu {
+    font-size: 1em;
     display: flex;
     width: 100%;
     align-items: center;
@@ -34,19 +55,36 @@ body,
     color: white;
     margin-bottom: 40px;
 
+
+    
+
     nav {
       width: 15%;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-around;      
     }
 
     a {
       color: white;
     }
+
+    @include xxl{
+      nav{
+        width: 30%;
+      }
+    }
+  
+
+    @include sm{
+        nav{
+          width: 50%;
+        }
+    }
   }
   .snipe {
     display: flex;
     width: 100%;
+    padding: 10px;
 
     aside {
       width: 30%;
@@ -75,7 +113,7 @@ body,
             width: 100%;
             height: 100%;
             padding: 0 10px;
-            font-size: 16px;
+            font-size: 1em;
             background-color: white;
             border: none;
 
@@ -97,15 +135,14 @@ body,
     .nftList {
       width: 70%;
       margin-left: 40px;
-
-      .nft:not(:last-child) {
-        margin-right: 30px;
-      }
+      display: inline-flex;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
 
       .nft {
         display: inline-flex;
         flex-direction: column;
-        max-width: 22%;
+        max-width: 21%;
         border-radius: 15px;
         padding: 20px;
         background-color: $bg-nft;
@@ -116,6 +153,9 @@ body,
 
         .content {
           margin-top: 7px;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
 
           h4 {
             text-align: center;
@@ -126,14 +166,16 @@ body,
             height: 25px;
             display: flex;
             align-items: center;
+            margin-top: auto;
 
             svg {
               margin-right: 7px;
+              height: 18px;
             }
 
             span {
               font-weight: 600;
-              font-size: 14px;
+              font-size: 0.9em;
             }
           }
         }
@@ -142,6 +184,246 @@ body,
           max-width: 100%;
           border-radius: 10px;
           margin-bottom: 10px;
+        }
+      }
+    }
+
+    @include xxl {
+      .nftList {
+        gap: 10px;
+
+        .nft {
+          min-width: 27%;
+        }
+      }
+    }
+
+    @include lg {
+      display: block;
+
+      aside {
+        width: 100%;
+      }
+
+      .nftList {
+        margin: 0;
+        width: 100%;
+        align-self: stretch;
+      }
+    }
+
+    @include md {
+    }
+
+    @include sm {
+      .nftList {
+        .nft {
+          min-width: 45%;
+        }
+      }
+    }
+
+    @include xs {
+      .nftList {
+        .nft {
+          min-width: 100%;
+        }
+      }
+    }
+  }
+
+  .statistics {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    aside {
+      min-width: 30%;
+      width: 50%;
+      padding: 20px;
+      margin-bottom: 50px;
+      .select {
+        -webkit-box-shadow: 11px 18px 52px -30px rgba($box-shadow, 0.75);
+        -moz-box-shadow: 11px 18px 52px -30px rgba($box-shadow, 0.75);
+        box-shadow: 11px 18px 52px -30px rgba($box-shadow, 0.75);
+      }
+
+      .attributes {
+        margin-top: 30px;
+
+        .attribute:not(:last-child) {
+          margin-bottom: 15px;
+        }
+
+        label {
+          display: inline-block;
+          width: 100%;
+          height: 38px;
+          margin-bottom: 15px;
+
+          input {
+            width: 100%;
+            height: 100%;
+            padding: 0 10px;
+            font-size: 1em;
+            background-color: white;
+            border: none;
+
+            &:focus {
+              outline: 1px solid $outline-blue;
+            }
+          }
+
+          div {
+            color: rgba(black, 0.7);
+            background-color: $bg-light;
+            border-radius: 15px;
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }
+
+    .stats {
+      width: 75%;
+      padding: 0 20px;
+
+      .stat {
+        display: flex;
+        background: $bg-nft;
+        padding: 20px 0px 10px 30px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        align-items: stretch;
+        -webkit-box-shadow: 11px 18px 52px -30px rgba($box-shadow, 0.75);
+        -moz-box-shadow: 11px 18px 52px -30px rgba($box-shadow, 0.75);
+        box-shadow: 11px 18px 52px -30px rgba($box-shadow, 0.75);
+
+        .image {
+          width: 200px;
+          margin-right: 30px;
+          margin: auto;
+
+          img {
+            width: 100%;
+            border-radius: 50%;
+          }
+        }
+        .content {
+          min-height: 100%;
+          flex: 1;
+          display: flex;
+          margin-right: 20px;
+          flex-direction: column;
+          h3 {
+            text-align: center;
+            font-size: 1.8em;
+            width: 100%;
+            margin-top: 30px;
+          }
+
+          .badges {
+            display: flex;
+            margin: auto;
+            justify-content: space-around;
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 15px;
+            row-gap: 20px;
+            .badge {
+              display: inline-flex;
+              justify-content: space-between;
+              align-items: center;
+              font-size: 0.75em;
+              width: 42%;
+              height: 30px;
+              padding: 0 15px;
+              background-color: $bg-light;
+              .price {
+                font-weight: bold;
+              }
+            }
+          }
+        }
+
+        .chart {
+          width: 35%;
+          margin: 10px 30px 0 0;
+        }
+      }
+    }
+
+    @include xxl {
+      .stats {
+        .stat {
+          flex-wrap: wrap;
+
+          .chart{
+            display: block;
+            width: 100%;
+          }
+
+          .content {
+            margin-right: 0;
+            margin-bottom: 30px;
+            h3 {
+              margin-top: 0;
+              margin-bottom: 30px;
+            }
+          }
+
+          .chart {
+            width: 70%;
+            margin: auto;
+            margin-top: 30px;
+            min-height: 100px;
+          }
+        }
+      }
+    }
+
+    @include lg {
+        aside{
+          width: 80%;
+        }
+
+       .stats{
+
+
+        .stat {
+          padding: 20px 0;
+          flex-direction: column;
+
+          .image {
+            width: 150px;
+            margin-bottom: 40px;
+          }
+
+          .chart {
+            width: 80%;
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+
+    @include md {
+      aside{
+        width: 100%;
+      }
+
+      .stats{
+        width: 100%;
+
+        .stat {
+
+          .image {
+            width: 100px;
+            margin-bottom: 30px;
+          }
+
         }
       }
     }

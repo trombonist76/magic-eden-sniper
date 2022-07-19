@@ -7,7 +7,6 @@ export const getCollections = createAsyncThunk("collections/getCollections", asy
   return data
 })
 
-
 const collectionSlice = createSlice({
   name:"collections",
   initialState:{

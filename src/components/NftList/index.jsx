@@ -10,7 +10,6 @@ export default function NftList() {
   const {items,loading,error} = useSelector(state=>state.snipe.nfts)
   const filteredItems = items.filter(item=> priceFilter ? priceFilter >= item.price : item)
 
-  console.log(refreshInterval)
   useEffect(()=>{
     let interval
     if(query){
